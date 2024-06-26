@@ -1,25 +1,40 @@
 const iconUrl = chrome.runtime.getURL('icon.png');
 
 function addIconToRedditLinks() {
-  const links = document.querySelectorAll('a[href^="https://www.reddit.com/r/"]');
-  links.forEach(link => {
-    if (!link.querySelector('.reddit-json-icon')) {
-      const icon = document.createElement('img');
-      icon.src = iconUrl;
-      icon.className = 'reddit-json-icon';
-      icon.title = 'Extract Reddit JSON';
-      icon.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        extractRedditJSON(link.href);
-      });
-      link.insertBefore(icon, link.firstChild);
-    }
-  });
-}
+    const links = document.querySelectorAll('a[href^="https://www.reddit.com/r/"]');
+    links.forEach(link => {
+      if (!link.querySelector('.reddit-json-icon')) {
+        const icon = document.createElement('img');
+        icon.src = chrome.runtime.getURL('icon.png');
+        icon.className = 'reddit-json-icon';
+        icon.title = 'Extract Reddit JSON';
+        icon.style.cssText = `
+          display: inline-block;
+          width: 32px;
+          height: 32px;
+          margin-right: 10px;
+          vertical-align: middle;
+          cursor: pointer;
+          position: relative;
+          z-index: 1000;
+        `;
+        icon.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          extractRedditJSON(link.href);
+        });
+        link.insertBefore(icon, link.firstChild);
+      }
+    });
+  }
 
 function extractRedditJSON(url) {
   const jsonUrl = url.replace('https://www.reddit.com', 'https://old.reddit.com') + '.json';
+  chrome.runtime.sendMessage({action: 'fetchRedditJSON', url: jsonUrl});
+}
+
+function extractCurrentPage() {
+  const jsonUrl = window.location.href.replace('https://www.reddit.com', 'https://old.reddit.com') + '.json';
   chrome.runtime.sendMessage({action: 'fetchRedditJSON', url: jsonUrl});
 }
 
@@ -33,6 +48,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       console.error('Error:', message.error);
       showNotification('Failed to fetch Reddit data. Please try again.');
     }
+  } else if (message.action === 'extractCurrentPage') {
+    extractCurrentPage();
+  } else if (message.action === 'showNotification') {
+    showNotification(message.message);
   }
 });
 
@@ -82,4 +101,3 @@ addIconToRedditLinks();
 // Monitor for dynamically added content
 const observer = new MutationObserver(addIconToRedditLinks);
 observer.observe(document.body, { childList: true, subtree: true });
-

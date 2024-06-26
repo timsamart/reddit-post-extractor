@@ -23,3 +23,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       return true; // Indicates that the response is sent asynchronously
     }
   });
+  
+  chrome.browserAction.onClicked.addListener((tab) => {
+    if (tab.url.includes('reddit.com')) {
+      chrome.tabs.sendMessage(tab.id, {action: 'extractCurrentPage'});
+    } else {
+      chrome.tabs.sendMessage(tab.id, {action: 'showNotification', message: 'This is not a Reddit page.'});
+    }
+  });
