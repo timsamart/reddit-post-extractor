@@ -1,0 +1,25 @@
+.reddit-json-icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  
+  .reddit-json-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    10%, 90% { opacity: 1; }
+  }

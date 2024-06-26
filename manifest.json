@@ -1,0 +1,24 @@
+{
+    "manifest_version": 2,
+    "name": "Reddit JSON Extractor",
+    "version": "1.0",
+    "description": "Extracts upvotes, name, and content from Reddit posts",
+    "permissions": [
+      "https://old.reddit.com/*",
+      "clipboardWrite"
+    ],
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": false
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "css": ["styles.css"]
+      }
+    ],
+    "web_accessible_resources": [
+      "icon.png"
+    ]
+  }
