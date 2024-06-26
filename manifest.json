@@ -2,10 +2,11 @@
     "manifest_version": 2,
     "name": "Reddit JSON Extractor",
     "version": "1.0",
-    "description": "Extracts upvotes, name, and content from Reddit posts",
+    "description": "Extracts upvotes, name and content from Reddit posts and comments",
     "permissions": [
+      "activeTab",
       "https://old.reddit.com/*",
-      "clipboardWrite"
+      "notifications"
     ],
     "background": {
       "scripts": ["background.js"],
