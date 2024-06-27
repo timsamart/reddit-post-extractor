@@ -1,29 +1,31 @@
 {
-    "manifest_version": 2,
-    "name": "Reddit JSON Extractor",
-    "version": "1.0",
-    "description": "Extracts upvotes, name and content from Reddit posts and comments",
-    "permissions": [
-      "activeTab",
-      "https://old.reddit.com/*",
-      "notifications"
-    ],
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"],
-        "css": ["styles.css"]
-      }
-    ],
-    "browser_action": {
-      "default_icon": "icon.png",
-      "default_title": "Extract Reddit JSON"
-    },
-    "web_accessible_resources": [
-      "icon.png"
-    ]
-  }
+  "manifest_version": 3,
+  "name": "Reddit JSON Extractor",
+  "version": "1.0",
+  "description": "Extracts upvotes, name and content from Reddit posts and comments",
+  "permissions": [
+    "activeTab",
+    "notifications"
+  ],
+  "host_permissions": [
+    "https://old.reddit.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "action": {
+    "default_icon": "icon.png",
+    "default_title": "Extract Reddit JSON"
+  },
+  "web_accessible_resources": [{
+    "resources": ["icon.png"],
+    "matches": ["<all_urls>"]
+  }]
+}

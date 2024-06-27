@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     }
   });
   
-  chrome.browserAction.onClicked.addListener((tab) => {
+  chrome.action.onClicked.addListener((tab) => {
     if (tab.url.includes('reddit.com')) {
       chrome.tabs.sendMessage(tab.id, {action: 'extractCurrentPage'});
     } else {
