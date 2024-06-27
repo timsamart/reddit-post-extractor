@@ -5,10 +5,8 @@
   "description": "Extracts upvotes, name and content from Reddit posts and comments",
   "permissions": [
     "activeTab",
-    "notifications"
-  ],
-  "host_permissions": [
-    "https://old.reddit.com/*"
+    "notifications",
+    "https://*.reddit.com/*"
   ],
   "background": {
     "service_worker": "background.js"
